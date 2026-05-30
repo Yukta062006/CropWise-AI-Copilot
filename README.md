@@ -132,7 +132,7 @@ Kisan-AI/
 ## 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/kisan-ai.git
+git clone https://github.com/Yukta062006/CropWise-AI-Copilot.git
 cd kisan-ai
 ```
 
@@ -266,15 +266,9 @@ git push origin feature-name
 
 ## YuktaThakur
 
-Passionate about AI, Open Source & building impactful tech for Bharat 🇮🇳
-
+Passionate about AI, Innovation & solving real-world problems 🌍
 ---
 
-# 📜 License
-
-This project is licensed under the MIT License.
-
----
 
 # 💖 Support the Project
 
@@ -291,6 +285,5 @@ If you like this project:
 
 ## 🌾 Empowering Farmers with AI & Technology 🚜
 
-Made with ❤️ for Bharat 🇮🇳
-
+Built with ❤️ to empower every farmer 🇮🇳
 </div>
