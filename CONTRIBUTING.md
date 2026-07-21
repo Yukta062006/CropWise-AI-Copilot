@@ -395,7 +395,7 @@ You can contribute by:
 
 Please be respectful and professional while interacting with other contributors.
 
-If the repository includes a `CODE_OF_CONDUCT.md`, please read and follow it.
+Please read our [Code Of Conduct](CODE_OF_CONDUCT.md) before contributing to the repository.
 
 We expect everyone to:
 
