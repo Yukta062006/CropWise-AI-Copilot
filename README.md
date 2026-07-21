@@ -211,6 +211,7 @@ We believe technology can help farmers:
 # 🤝 Contributing
 
 We welcome contributions from everyone ❤️
+- Make sure to read our [CONTRIBUTING.md](CONTRIBUTING.md) and our [Code Of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
 ## Steps to Contribute
 
