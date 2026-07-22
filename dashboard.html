@@ -340,8 +340,13 @@ footer a:hover{color:var(--gold2);}
 @media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr);}.stats-row{grid-template-columns:repeat(2,1fr);}.feature-banner{grid-template-columns:1fr;}.price-strip{grid-template-columns:1fr 1fr;}}
 @media(max-width:768px){.topnav a:not(.btn-cta){display:none;}.trust{gap:3rem;}.hero{min-height:auto;}.weather-bar{padding:10px 1.5rem;}}
 @media(max-width:560px){.grid{grid-template-columns:1fr;}.hero{padding:4.5rem 1.5rem 3rem;}.services,.stats-row,.sec-wrap,.feature-banner,.mandi-widget{padding-left:1.2rem;padding-right:1.2rem;}.topbar{padding:0 1.2rem;}#chatbox{width:calc(100vw - 28px);right:14px;}footer{flex-direction:column;text-align:center;}.lang-toggle{margin-left:6px;}.price-strip{grid-template-columns:1fr;}}
-</style>
-</head>
+
+/* ══ SCROLL TO TOP ══ */
+#scrollTopBtn{position:fixed;bottom:28px;left:28px;z-index:1000;width:50px;height:50px;border-radius:50%;border:1px solid var(--border);cursor:none;background:var(--surface2);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 8px 22px rgba(0,0,0,.35);opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .3s,transform .3s cubic-bezier(.34,1.56,.64,1),visibility .3s,background .25s,color .25s;}
+#scrollTopBtn.show{opacity:1;visibility:visible;transform:translateY(0);}
+#scrollTopBtn:hover{background:linear-gradient(145deg,var(--green2),var(--emerald));color:#04140a;}
+@media(max-width:560px){#scrollTopBtn{bottom:20px;left:16px;width:44px;height:44px;font-size:1.05rem;}}
+</style></head>
 <body>
 
 <div id="cursor"></div>
@@ -517,9 +522,11 @@ footer a:hover{color:var(--gold2);}
   </div>
 </footer>
 
+<!-- SCROLL TO TOP -->
+<button id="scrollTopBtn" onclick="scrollToTop()" aria-label="Scroll to top" title="Scroll to top">⬆</button>
+
 <!-- CHATBOT -->
-<button id="fab" onclick="toggleChat()" data-tip="Ask Kisan AI">💬</button>
-<div id="chatbox">
+<button id="fab" onclick="toggleChat()" data-tip="Ask Kisan AI">💬</button><div id="chatbox">
   <div class="ch-head"><div class="ch-av">🤖</div><div><div class="ch-name">Kisan AI Assistant</div><div class="ch-sub"><span class="ch-dot"></span> qwen2.5:7b · Ollama Cloud</div></div><div class="ch-badge">CLOUD AI</div></div>
   <div class="ch-msgs" id="msgs"></div>
   <div class="ch-chips" id="chips"></div>
@@ -884,21 +891,9 @@ function msgs(){return document.getElementById('msgs');}
 function scrollDown(){const m=msgs();setTimeout(()=>m.scrollTop=m.scrollHeight,60);}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-// ══ THEME TOGGLE ══
-function applyTheme(t){
-  document.documentElement.setAttribute('data-theme',t);
-  const btn=document.getElementById('themeToggle');
-  if(btn)btn.textContent=t==='light'?'☀️':'🌙';
-  localStorage.setItem('cropwise-theme',t);
-}
-function toggleTheme(){
-  const current=document.documentElement.getAttribute('data-theme')==='light'?'light':'dark';
-  applyTheme(current==='light'?'dark':'light');
-}
-(function initTheme(){
-  const saved=localStorage.getItem('cropwise-theme');
-  const prefersLight=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches;
-  applyTheme(saved||(prefersLight?'light':'dark'));
-})();
+// ══ SCROLL TO TOP ══
+const scrollTopBtn=document.getElementById('scrollTopBtn');
+window.addEventListener('scroll',()=>{scrollTopBtn.classList.toggle('show',window.scrollY>400);});
+function scrollToTop(){window.scrollTo({top:0,behavior:'smooth'});}
 </script></body>
 </html>
