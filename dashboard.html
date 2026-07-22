@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script>(function(){try{var t=localStorage.getItem('cropwise-theme');if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Kisan AI — किसान सहायक</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Outfit:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -16,7 +16,15 @@
   --border:rgba(52,211,153,0.12);--border-gold:rgba(245,158,11,0.18);
   --r:18px;--r2:14px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html[data-theme="light"]{
+  --bg:#f6faf6;--bg2:#eef6ee;--surface:#ffffff;--surface2:#f0f5f0;
+  --green:#16a34a;--green2:#15803d;--emerald:#059669;--lime:#65a30d;
+  --gold:#d97706;--gold2:#f59e0b;--amber:#ea580c;
+  --red:#dc2626;--blue:#2563eb;--purple:#9333ea;
+  --white:#0a0a0a;--text:#0f2211;--text-mid:#2f4a32;--text-muted:#5a7a5d;
+  --border:rgba(22,101,52,0.15);--border-gold:rgba(217,119,6,0.2);
+}
+html[data-theme="light"] body::before{opacity:.015;}*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;cursor:none;}
 #cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--gold);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;}
@@ -37,7 +45,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;bac
 .topnav .btn-cta{background:linear-gradient(135deg,var(--gold),var(--amber));color:#0a0a00!important;font-weight:700;padding:9px 22px;margin-left:8px;border-radius:50px;box-shadow:0 4px 18px rgba(245,158,11,.4);transition:all .3s cubic-bezier(.34,1.56,.64,1);}
 .topnav .btn-cta:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 8px 30px rgba(245,158,11,.55);}
 .lang-toggle{display:flex;align-items:center;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:50px;padding:3px;gap:2px;margin-left:12px;}
-.lang-btn{padding:5px 13px;border-radius:50px;font-size:.74rem;font-weight:700;border:none;cursor:none;background:transparent;color:var(--text-muted);transition:all .22s;}
+#themeToggle{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);cursor:none;background:var(--surface2);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-size:1rem;margin-left:10px;transition:all .25s cubic-bezier(.34,1.56,.64,1);flex-shrink:0;}
+#themeToggle:hover{transform:scale(1.1) rotate(15deg);background:linear-gradient(145deg,var(--green2),var(--emerald));color:#04140a;}
+@media(max-width:768px){#themeToggle{margin-left:6px;}}.lang-btn{padding:5px 13px;border-radius:50px;font-size:.74rem;font-weight:700;border:none;cursor:none;background:transparent;color:var(--text-muted);transition:all .22s;}
 .lang-btn.active{background:linear-gradient(135deg,var(--green2),var(--emerald));color:white;box-shadow:0 2px 10px rgba(29,185,84,.4);}
 
 /* ══ LIVE TICKER ══ */
@@ -360,13 +370,13 @@ footer a:hover{color:var(--gold2);}
       <a href="/crop-doctor" data-en="Crop Doctor" data-hi="फसल डॉक्टर">Crop Doctor</a>
       <a href="/assistant" class="btn-cta" data-en="💬 Chat Now" data-hi="💬 बात करें">💬 Chat Now</a>
     </div>
-    <div class="lang-toggle">
+<div class="lang-toggle">
       <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
       <button class="lang-btn" id="btn-hi" onclick="setLang('hi')">हिं</button>
     </div>
+    <button id="themeToggle" onclick="toggleTheme()" aria-label="Toggle light/dark theme" title="Toggle theme">🌙</button>
   </div>
 </nav>
-
 <!-- LIVE TICKER -->
 <div class="ticker-wrap">
   <div class="ticker-label">📊 LIVE</div>
