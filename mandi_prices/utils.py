@@ -3,12 +3,21 @@ mandi_prices/utils.py
 All business logic extracted from the standalone mandi.py script.
 """
 
-import re
 import requests
+import json
+import redis
+import os
+import re
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 from geopy.distance import geodesic
+
+redis_url = os.environ.get("REDIS_URL", "redis://localhost:6379")
+try:
+    cache = redis.from_url(redis_url, decode_responses=True)
+except Exception:
+    cache = None
 
 API_KEY     = "579b464db66ec23bdd000001bdccc21bf0eb426f7bcfb88428e0475f"
 RESOURCE_ID = "9ef84268-d588-465a-a308-a864a43d0070"
@@ -136,6 +145,15 @@ out center body;
 
 
 def fetch_data(commodity: str, state: str = "", district: str = "") -> pd.DataFrame:
+    cache_key = f"mandi_prices:{commodity}:{state}:{district}"
+    if cache:
+        try:
+            cached_data = cache.get(cache_key)
+            if cached_data:
+                return pd.DataFrame(json.loads(cached_data))
+        except Exception:
+            pass
+
     url  = f"https://api.data.gov.in/resource/{RESOURCE_ID}"
     base = {
         "api-key": API_KEY, "format": "json",
@@ -146,7 +164,13 @@ def fetch_data(commodity: str, state: str = "", district: str = "") -> pd.DataFr
         try:
             r    = requests.get(url, params={**base, **extra}, timeout=15)
             recs = r.json().get("records", [])
-            return pd.DataFrame(recs) if recs else pd.DataFrame()
+            df = pd.DataFrame(recs) if recs else pd.DataFrame()
+            if not df.empty and cache:
+                try:
+                    cache.setex(cache_key, 3600, json.dumps(recs))
+                except Exception:
+                    pass
+            return df
         except Exception:
             return pd.DataFrame()
 
